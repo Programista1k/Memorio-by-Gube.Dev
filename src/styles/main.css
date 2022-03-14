@@ -1,0 +1,134 @@
+@use "utils/_normalize.scss";
+*,
+*::before,
+*::after {
+  font-family: "Smooch Sans", sans-serif;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  background-color: #2f4858;
+  color: white;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.container--login {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  row-gap: 16px;
+  background-color: #5a5784;
+  padding: 30px 70px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+          box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.login__heading {
+  letter-spacing: 1.5px;
+  font-weight: 400;
+  font-size: 34px;
+  text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login__heading__purple {
+  color: #ce5876;
+}
+
+.login__name__label {
+  font-weight: 200;
+  font-size: 26px;
+  letter-spacing: 1px;
+}
+
+.login__name__input {
+  width: 30%;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 32px;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 3px;
+  border-bottom: 1px solid black;
+  border-radius: 0px;
+  padding: 10px 0;
+  -webkit-transition: width 0.4s linear;
+  transition: width 0.4s linear;
+}
+
+.login__name__input:focus {
+  outline: none;
+}
+
+.login__name__input:not(:placeholder-shown) {
+  width: 100%;
+  border-color: #ce5876;
+}
+
+.login__error {
+  color: red;
+  letter-spacing: 3px;
+  font-size: 22px;
+  font-weight: 200;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.fadeIn {
+  -webkit-animation: fadeIn 0.3s linear forwards;
+          animation: fadeIn 0.3s linear forwards;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    height: 0px;
+    opacity: 0;
+  }
+  to {
+    height: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    height: 0px;
+    opacity: 0;
+  }
+  to {
+    height: 100%;
+    opacity: 1;
+  }
+}
+/*# sourceMappingURL=main.css.map */
