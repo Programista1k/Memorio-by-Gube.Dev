@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const config = {
   mode: "production",
-  entry: "./scripts/app.ts",
+  entry: "./src/scripts/app.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "app.js",
