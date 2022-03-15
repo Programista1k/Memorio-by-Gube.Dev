@@ -13,17 +13,184 @@
         />
         <link rel="stylesheet" href="src/styles/main.css" />
 
+        <script src="https://kit.fontawesome.com/32254a5593.js" crossorigin="anonymous"></script>
         <script src="dist/app.js" defer></script>
     </head>
     <body>
-        <div class="container container--login">
-            <h1 class="login__heading">
-                Witamy w <span class="login__heading__purple">Memory</span>!
-            </h1>
+        <div class="container container--login hidden">
+            <h2 class="login__heading">Witamy w <span class="login__heading__pink">Memorio</span>!</h2>
             <label for="name" class="login__name__label"></label>
             <input type="text" class="login__name__input" id="name" placeholder=". . ." />
             <p class="login__error"></p>
-            <button class="login__submit hidden">Dalej</button>
+            <button class="btn login__submit hidden">Dalej</button>
+        </div>
+
+        <div class="container container--difficulty hidden">
+            <h2 class="difficulty__heading">Wybierz poziom trudności</h2>
+            <div class="difficulties__container">
+                <div class="difficulties__single__container">
+                    <input
+                        type="radio"
+                        class="difficulty difficulty--easy"
+                        id="difficulty__easy"
+                        name="difficulty"
+                        value="easy"
+                    />
+                    <label class="difficulty__label difficulty__label__easy" for="difficulty__easy">
+                        Łatwy</label
+                    >
+                    <div class="difficulty__description">9 par, bez limitu - Łatwizna!</div>
+                </div>
+                <div class="difficulties__single__container mobile__hidden">
+                    <input
+                        type="radio"
+                        class="difficulty difficulty--medium"
+                        id="difficulty__medium"
+                        name="difficulty"
+                        value="medium"
+                    />
+                    <label class="difficulty__label difficulty__label__medium" for="difficulty__medium">
+                        Średni</label
+                    >
+                    <div class="difficulty__description">16 par, bez limitu - Dasz radę!</div>
+                </div>
+                <div class="difficulties__single__container">
+                    <input
+                        type="radio"
+                        class="difficulty difficulty--hard"
+                        id="difficulty__hard"
+                        name="difficulty"
+                        value="hard"
+                    />
+                    <label class="difficulty__label difficulty__label__hard" for="difficulty__hard">
+                        Trudny</label
+                    >
+                    <div class="difficulty__description">32 pary, 10 minut - Powodzenia!</div>
+                </div>
+                <button class="btn difficulty__submit hidden">Rozpocznij Grę!</button>
+            </div>
+        </div>
+
+        <div class="container container--game">
+            <div class="game__nav">
+                <p class="game__nav__difficulty">
+                    <i class="fas fa-skull game__nav__icon"></i>
+                    <span class="game__nav__difficulty__text">Łatwy</span>
+                    <i class="far fa-check-circle game__nav__icon"></i>
+                    <span class="game__nav__matched">0</span>
+                    <i class="far fa-times-circle game__nav__icon"></i>
+                    <span class="game__nav__missMatched">0</span>
+                </p>
+                <p class="game__nav__time">00:00:00</p>
+            </div>
+            <div class="game__content">
+                <template class="single__card__template">
+                    <div class="single__card single__card__easy">
+                        <img
+                            src="src/images/easy/question_mark.png"
+                            alt="Question mark"
+                            class="single__card__front__image"
+                        />
+                        <img src="" alt="Memory icon" class="single__card__image" />
+                    </div>
+                </template>
+                <div class="single__card single__card__easy">
+                    <img
+                        src="src/images/easy/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/apple.png" alt="Memory icon" class="single__card__image" />
+                </div>
+                <div class="single__card single__card__easy">
+                    <img
+                        src="src/images/easy/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/apple.png" alt="Memory icon" class="single__card__image" />
+                </div>
+                <div class="single__card single__card__easy">
+                    <img
+                        src="src/images/easy/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/apple.png" alt="Memory icon" class="single__card__image" />
+                </div>
+                <div class="single__card single__card__easy">
+                    <img
+                        src="src/images/easy/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/apple.png" alt="Memory icon" class="single__card__image" />
+                </div>
+                <div class="single__card single__card__easy">
+                    <img
+                        src="src/images/easy/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/apple.png" alt="Memory icon" class="single__card__image" />
+                </div>
+                <div class="single__card single__card__easy">
+                    <img
+                        src="src/images/easy/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/apple.png" alt="Memory icon" class="single__card__image" />
+                </div>
+                <div class="single__card single__card__easy">
+                    <img
+                        src="src/images/easy/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/apple.png" alt="Memory icon" class="single__card__image" />
+                </div>
+                <div class="single__card single__card__easy">
+                    <img
+                        src="src/images/easy/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/apple.png" alt="Memory icon" class="single__card__image" />
+                </div>
+                <div class="single__card single__card__easy">
+                    <img
+                        src="src/images/easy/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/apple.png" alt="Memory icon" class="single__card__image" />
+                </div>
+                <div class="single__card single__card__easy single__card__show">
+                    <img
+                        src="src/images/easy/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/apple.png" alt="Memory icon" class="single__card__image" />
+                </div>
+                <div class="single__card single__card__easy">
+                    <img
+                        src="src/images/easy/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/apple.png" alt="Memory icon" class="single__card__image" />
+                </div>
+                <div class="single__card single__card__easy">
+                    <img
+                        src="src/images/question_mark.png"
+                        alt="Question mark"
+                        class="single__card__front__image"
+                    />
+                    <img src="src/images/easy/01.png" alt="Memory icon" class="single__card__image" />
+                </div>
+            </div>
         </div>
     </body>
 </html>

@@ -1,15 +1,17 @@
 // This is main file, which is used to start the application - Enjoy!
 // Btw. It's my first TypeScript project so it's a bit messy and not perfect for sure!
 
-import { LoginModule } from "./modules/login";
+// ============================ Explanation ============================
+// You can find few config's here, for example the text that should be displayed on the login screen.
+
+import { InitModule } from "./modules/init";
+import { Game } from "./modules/game";
 
 class App {
-  constructor() {
-    const login = new LoginModule("Jak masz na Imię?...");
-    login.typingAnimation();
-
-    console.log("This is constructor body");
-  }
+    constructor() {
+        new InitModule("Jak masz na Imię?...");
+        new Game("Maciej", "easy");
+    }
 }
 
 new App();

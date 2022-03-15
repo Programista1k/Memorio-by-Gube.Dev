@@ -1,0 +1,16 @@
+@use "../utils/colors" as colors;
+
+.btn {
+    font-size: 24px;
+    padding: 8px 20px;
+    color: white;
+    background-color: colors.$cta;
+    border: none;
+    border-radius: 8px;
+    transition: transform 0.3s linear;
+}
+
+.btn:hover {
+    transform: scale(0.9);
+    cursor: pointer;
+}

@@ -1,0 +1,57 @@
+@keyframes slideRight {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        height: 0px;
+        opacity: 0;
+    }
+
+    to {
+        height: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        height: 100%;
+        opacity: 1;
+    }
+
+    to {
+        height: 0px;
+        opacity: 0;
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 0.3s linear forwards;
+}
+
+.fadeOut {
+    animation: fadeOut 0.3s linear forwards;
+}
+
+.slideRight {
+    animation: slideRight 0.5s linear forwards;
+}
+
+.slideLeft {
+    animation: slideLeft 0.5s linear forwards;
+}
