@@ -69,8 +69,8 @@ export class Renderer {
         const randomSrcCopy = this.cloneArray(randomSrcNumbers);
         const randomSrcCopyClone = this.cloneArray(randomSrcNumbers);
 
-        const cards: SingleCard[] = [];
-        const clonedCards: SingleCard[] = [];
+        let cards: SingleCard[] = [];
+        let clonedCards: SingleCard[] = [];
 
         for (let i = 0; i < pairsCount; i++) {
             const src = `src/images/${difficulty}/0${randomSrcCopy.pop()}.png`;
@@ -86,8 +86,11 @@ export class Renderer {
             clonedCards.push(cardClone);
         });
 
-        randomPosNumbers = randomPosNumbers.reverse();
-        randomSecondPosNumbers = randomSecondPosNumbers.reverse();
+        // randomPosNumbers = randomPosNumbers.reverse();
+        // randomSecondPosNumbers = randomSecondPosNumbers.reverse();
+
+        randomPosNumbers = this.shuffleArray(randomPosNumbers);
+        randomSecondPosNumbers = this.shuffleArray(randomSecondPosNumbers);
 
         cards.forEach((card) => {
             card.position = randomPosNumbers.pop() as number;
@@ -103,6 +106,12 @@ export class Renderer {
         }
 
         this.cardsStorage.push(...cards, ...clonedCards);
+
+        this.sortCards(this.cardsStorage);
+    }
+
+    private sortCards(cards: SingleCard[]) {
+        cards.sort((a, b) => a.position - b.position);
     }
 
     private arrayValidation(a1: number[], a2: number[]): boolean {
@@ -154,6 +163,17 @@ export class Renderer {
         }
 
         return numbers;
+    }
+
+    private shuffleArray(array: any[]) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            let temp: any = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+
+        return array;
     }
 
     getRandomIntInclusive(min: number, max: number) {

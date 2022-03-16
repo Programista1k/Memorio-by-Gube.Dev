@@ -99,7 +99,6 @@ export class Game {
         this.resetFailedButton.addEventListener("click", () => window.location.reload());
 
         this.failedHeadingName.innerText = this.name;
-        console.log(this.name);
 
         this.failedScore.time.innerText = this.time;
         this.failedScore.difficulty.innerText = this.difficulty;
