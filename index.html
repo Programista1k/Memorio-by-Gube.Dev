@@ -85,7 +85,7 @@
             </div>
             <div class="game__content">
                 <template class="single__card__template">
-                    <div class="single__card single__card__easy">
+                    <div class="single__card">
                         <img
                             src="src/images/question_mark.png"
                             alt="Question mark"
@@ -114,6 +114,27 @@
             </ul>
 
             <button class="btn end__restart">Zacznij od nowa!</button>
+        </div>
+
+        <div class="container container--failed hidden">
+            <h2 class="end__heading">Niestety <span class="failed__heading__name">ss</span></h2>
+            <p class="end__description">Twój czas się skończył...</p>
+
+            <h3 class="end__score__heading">Twój wynik:</h3>
+            <ul class="end__score__list">
+                <li class="end__score__list__item">Czas : <span class="failed__score__time"></span></li>
+                <li class="end__score__list__item">
+                    Poziom trudności : <span class="failed__score__difficulty"></span>
+                </li>
+                <li class="end__score__list__item">
+                    Liczba błędów : <span class="failed__score__mistakes"></span>
+                </li>
+                <li class="end__score__list__item">
+                    Liczba par : <span class="failed__score__matches"></span>
+                </li>
+            </ul>
+
+            <button class="btn failed__restart">Spróbuj ponownie!</button>
         </div>
     </body>
 </html>

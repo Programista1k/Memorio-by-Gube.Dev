@@ -58,12 +58,12 @@ export class Renderer {
 
     private createCards(pairsCount: number, difficulty: string) {
         const randomSrcNumbers = this.getRandomNumbers(pairsCount);
-        let randomPosNumbers = this.getArrayOfNumbers(0, 9);
-        let randomSecondPosNumbers = this.getArrayOfNumbers(9, 18);
+        let randomPosNumbers = this.getArrayOfNumbers(0, pairsCount);
+        let randomSecondPosNumbers = this.getArrayOfNumbers(pairsCount, pairsCount * 2);
 
         while (!this.arrayValidation(randomPosNumbers, randomSecondPosNumbers)) {
-            randomPosNumbers = this.getArrayOfNumbers(0, 9);
-            randomSecondPosNumbers = this.getArrayOfNumbers(9, 18);
+            randomPosNumbers = this.getArrayOfNumbers(0, pairsCount);
+            randomSecondPosNumbers = this.getArrayOfNumbers(pairsCount, pairsCount * 2);
         }
 
         const randomSrcCopy = this.cloneArray(randomSrcNumbers);

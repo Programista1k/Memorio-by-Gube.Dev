@@ -50,6 +50,7 @@ export class InitModule {
     @Autobind
     nextStep() {
         this.setName();
+        console.log("Tutaj set name jest " + this.name);
         this.loginContainer.classList.add("slideRight");
         setTimeout(() => {
             this.loginContainer.classList.add("hidden");
@@ -69,7 +70,7 @@ export class InitModule {
     }
 
     private setName() {
-        this.name = this.loginInput.textContent!;
+        this.name = this.loginInput.value!;
     }
 
     @Autobind

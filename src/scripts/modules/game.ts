@@ -37,34 +37,32 @@ export class Game {
     // Ending container
 
     private endContainer = document.querySelector(".container--end")! as HTMLElement;
-    private endHeadingName = document.querySelector(".end__heading__name")! as HTMLElement;
+    private failedContainer = document.querySelector(".container--failed")! as HTMLElement;
+    private endHeadingName = document.querySelector(".end__heading__name")! as HTMLSpanElement;
+    private failedHeadingName = document.querySelector(".failed__heading__name")! as HTMLSpanElement;
 
-    private score = {
+    private endScore = {
         time: document.querySelector(".end__score__time")! as HTMLSpanElement,
         difficulty: document.querySelector(".end__score__difficulty")! as HTMLSpanElement,
         mistakes: document.querySelector(".end__score__mistakes")! as HTMLSpanElement,
         matches: document.querySelector(".end__score__matches")! as HTMLSpanElement,
     };
 
+    private failedScore = {
+        time: document.querySelector(".failed__score__time")! as HTMLSpanElement,
+        difficulty: document.querySelector(".failed__score__difficulty")! as HTMLSpanElement,
+        mistakes: document.querySelector(".failed__score__mistakes")! as HTMLSpanElement,
+        matches: document.querySelector(".failed__score__matches")! as HTMLSpanElement,
+    };
+
     private resetButton = document.querySelector(".end__restart")!;
+    private resetFailedButton = document.querySelector(".failed__restart")!;
 
     constructor(private name: string, private difficulty: string) {
         this.setPairsCount();
         this.prepareGame();
-        this.getTime();
         this.renderer = new Renderer(this.difficulty);
         this.setupListeners();
-
-        this.name;
-        this.totalPairs;
-    }
-
-    private getTime() {
-        this.time;
-        this.matched;
-        this.missMatched;
-        this.matchedElement;
-        this.missMatchedElement;
     }
 
     private prepareGame() {
@@ -78,7 +76,6 @@ export class Game {
     }
 
     private endGame() {
-        // Tutaj będzie zakańczanie gry, pokazywanie ekranu końcowego z wynikami, usuwanie wszystkich pól, etc.
         this.timerEnabled = false;
 
         Hider.hideElement(this.gameContainer);
@@ -88,10 +85,26 @@ export class Game {
         this.resetButton.addEventListener("click", () => window.location.reload());
 
         this.endHeadingName.innerText = this.name;
-        this.score.time.innerText = this.time;
-        this.score.difficulty.innerText = this.difficulty;
-        this.score.matches.innerText = this.matched.toString();
-        this.score.mistakes.innerText = this.missMatched.toString();
+        this.endScore.time.innerText = this.time;
+        this.endScore.difficulty.innerText = this.difficulty;
+        this.endScore.matches.innerText = this.matched.toString() + " / " + this.totalPairs.toString();
+        this.endScore.mistakes.innerText = this.missMatched.toString();
+    }
+
+    private gameFailed() {
+        Hider.hideElement(this.gameContainer);
+        this.gameContainer.classList.add("fadeOut");
+        Hider.showElement(this.failedContainer);
+
+        this.resetFailedButton.addEventListener("click", () => window.location.reload());
+
+        this.failedHeadingName.innerText = this.name;
+        console.log(this.name);
+
+        this.failedScore.time.innerText = this.time;
+        this.failedScore.difficulty.innerText = this.difficulty;
+        this.failedScore.matches.innerText = this.matched.toString() + " / " + this.totalPairs.toString();
+        this.failedScore.mistakes.innerText = this.missMatched.toString();
     }
 
     private setupListeners() {
@@ -134,6 +147,7 @@ export class Game {
         }
     }
 
+    @Autobind
     private startTimer() {
         if (this.timerEnabled === true) {
             setInterval(this.timer, 1000);
@@ -173,8 +187,9 @@ export class Game {
 
     @Autobind
     private timer() {
-        if (this.timeLimit || this.minutes === 10) {
-            this.endGame();
+        if (this.timeLimit && this.minutes === 10) {
+            this.timerEnabled = false;
+            return this.gameFailed();
         }
 
         ++this.seconds;
