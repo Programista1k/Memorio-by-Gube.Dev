@@ -28,6 +28,10 @@ export class InitModule {
 
     private difficultySubmit = document.querySelector(".difficulty__submit")! as HTMLElement;
 
+    // Game section
+
+    private gameContainer = document.querySelector(".container--game")! as HTMLElement;
+
     constructor(private text: string) {
         this.setListeners();
         this.typingAnimation();
@@ -40,6 +44,7 @@ export class InitModule {
         this.difficultyContainer.classList.remove("fadeIn");
         Hider.hideElement(this.difficultyContainer);
         this.difficultyContainer.classList.add("fadeOut");
+        Hider.showElement(this.gameContainer);
     }
 
     @Autobind

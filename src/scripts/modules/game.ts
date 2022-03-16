@@ -3,6 +3,8 @@ import { Renderer } from "./renderer";
 import { Difficulty } from "./init";
 
 export class Game {
+    private renderer: Renderer;
+
     // All timer related
     private timerEnabled: boolean = true;
     private timeLimit: boolean = false;
@@ -19,27 +21,27 @@ export class Game {
     private matchedElement = document.querySelector(".game__nav__matched") as HTMLSpanElement;
     private missMatchedElement = document.querySelector(".game__nav__missMatched") as HTMLSpanElement;
     private difficultyElement = document.querySelector(".game__nav__difficulty__text") as HTMLSpanElement;
-    private singleCardElement = document.querySelectorAll(".single__card")!;
+
+    private singleCardElements = document.getElementsByClassName("single__card")!;
+
+    private currentlyComparing: HTMLElement[] = [];
+
+    private totalPairs: number = 0;
 
     private matched: number = 0;
     private missMatched: number = 0;
 
+    private flipped: number = 0;
+
     constructor(private name: string, private difficulty: string) {
+        this.setPairsCount();
         this.prepareGame();
-        this.setupListeners();
         this.getTime();
-        new Renderer(this.name, this.difficulty);
-    }
+        this.renderer = new Renderer(this.difficulty);
+        this.setupListeners();
 
-    private setupListeners() {
-        this.singleCardElement.forEach((card) => {
-            card.addEventListener("click", this.handleCardClick);
-        });
-    }
-
-    private handleCardClick(e: Event) {
-        const target = e.currentTarget as HTMLElement;
-        target.classList.add("single__card__show");
+        this.name;
+        this.totalPairs;
     }
 
     private getTime() {
@@ -64,10 +66,78 @@ export class Game {
         // Tutaj będzie zakańczanie gry, pokazywanie ekranu końcowego z wynikami, usuwanie wszystkich pól, etc.
     }
 
+    private setupListeners() {
+        for (let card of this.singleCardElements) {
+            card.addEventListener("click", this.handleCardClick);
+        }
+    }
+
+    private setPairsCount() {
+        switch (this.difficulty) {
+            case Difficulty.easy:
+                this.totalPairs = 9;
+                break;
+
+            case Difficulty.medium:
+                this.totalPairs = 16;
+                break;
+
+            case Difficulty.hard:
+                this.totalPairs = 32;
+                break;
+        }
+    }
+
+    @Autobind
+    private handleCardClick(e: Event) {
+        const target = e.currentTarget as HTMLElement;
+        if (this.flipped < 2) {
+            this.flipped++;
+            target.classList.add("single__card__show");
+            target.classList.add("blocked");
+            this.addToComparing(target);
+            if (this.flipped === 2) {
+                this.compareCards();
+            }
+        }
+    }
+
     private startTimer() {
         if (this.timerEnabled === true) {
             setInterval(this.timer, 1000);
         }
+    }
+
+    private addToComparing(card: HTMLElement) {
+        this.currentlyComparing.push(card);
+    }
+
+    private compareCards() {
+        const firstId = this.currentlyComparing[0].id;
+        const secondId = this.currentlyComparing[1].id;
+
+        if (this.renderer.matchCards(firstId, secondId)) {
+            this.matched++;
+            this.currentlyComparing.forEach((card) => {
+                card.classList.add("single__card__matched");
+            });
+            this.currentlyComparing = [];
+            this.flipped = 0;
+        } else {
+            this.missMatched++;
+            setTimeout(() => {
+                this.currentlyComparing.forEach((card) => {
+                    card.classList.remove("single__card__show");
+                    card.classList.remove("blocked");
+                });
+                this.currentlyComparing = [];
+                this.flipped = 0;
+            }, 1000);
+        }
+
+        this.matchedElement.innerText = this.matched.toString();
+        this.missMatchedElement.innerText = this.missMatched.toString();
+        console.log(this.matched, this.missMatched);
     }
 
     @Autobind

@@ -2,81 +2,107 @@
 import { Difficulty } from "./init";
 
 export class Renderer {
-    private gameContainer = document.querySelector(".container--game");
+    // private gameContainer = document.querySelector(".container--game")!;
+    private cardsContainer = document.querySelector(".game__content")!;
 
-    // private singleCardTemplate = document.querySelector(".single__card__template")! as HTMLTemplateElement;
-    // private singleCardCloned = this.singleCardTemplate.content.cloneNode(true) as DocumentFragment;
+    private singleCardTemplate = document.querySelector(".single__card__template")! as HTMLTemplateElement;
 
     private cardsStorage: SingleCard[] = [];
 
-    constructor(private name: string, private difficulty: string) {
-        this.name;
-        this.difficulty;
-        this.gameContainer;
-        this.render();
+    constructor(private difficulty: string) {
+        this.initRender();
     }
 
-    render() {
-        this.initRender(this.difficulty);
-        this.createCards(9, this.difficulty);
-        console.log(this.cardsStorage);
+    public matchCards(firstId: string, secondId: string) {
+        const firstObject = this.cardsStorage.find((card) => card.id === firstId)!;
+        const secondObject = this.cardsStorage.find((card) => card.id === secondId)!;
+
+        if (firstObject.position === secondObject.pairPosition) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    private initRender(difficulty: string) {
-        switch (difficulty) {
+    private initRender() {
+        switch (this.difficulty) {
             case Difficulty.easy:
-                this.renderEasy();
+                this.createCards(9, "easy");
+                this.renderCards("easy");
                 break;
 
             case Difficulty.medium:
-                this.renderMedium();
+                this.createCards(16, "medium");
+                this.renderCards("medium");
                 break;
 
             case Difficulty.hard:
-                this.renderHard();
+                this.createCards(32, "hard");
+                this.renderCards("hard");
                 break;
         }
     }
 
-    // Renders 9 pairs, 18 elements total!
-    private renderEasy() {}
+    private renderCards(difficulty: string) {
+        this.cardsStorage.forEach((card) => {
+            let singleCard = this.singleCardTemplate.content.cloneNode(true) as HTMLElement;
+            singleCard = singleCard.querySelector("div")!;
+            singleCard.id = card.id;
+            singleCard.classList.add(`single__card__${difficulty}`);
+            const img = singleCard.querySelector(".single__card__image") as HTMLImageElement;
+            img.src = card.imageSrc;
 
-    // Renders 16 pairs, 32 elements total!
-    private renderMedium() {}
-
-    // Renders 32 pairs, 64 elements total - has 10 minute limit time!
-    private renderHard() {}
+            this.cardsContainer.append(singleCard);
+        });
+    }
 
     private createCards(pairsCount: number, difficulty: string) {
         const randomSrcNumbers = this.getRandomNumbers(pairsCount);
-        let randomPosNumbers = this.getRandomNumbers(pairsCount);
-        let randomSecondPosNumbers = this.getRandomNumbers(pairsCount);
+        let randomPosNumbers = this.getArrayOfNumbers(0, 9);
+        let randomSecondPosNumbers = this.getArrayOfNumbers(9, 18);
 
         while (!this.arrayValidation(randomPosNumbers, randomSecondPosNumbers)) {
-            randomPosNumbers = this.getRandomNumbers(pairsCount);
-            randomSecondPosNumbers = this.getRandomNumbers(pairsCount);
+            randomPosNumbers = this.getArrayOfNumbers(0, 9);
+            randomSecondPosNumbers = this.getArrayOfNumbers(9, 18);
         }
 
         const randomSrcCopy = this.cloneArray(randomSrcNumbers);
         const randomSrcCopyClone = this.cloneArray(randomSrcNumbers);
 
+        const cards: SingleCard[] = [];
+        const clonedCards: SingleCard[] = [];
+
         for (let i = 0; i < pairsCount; i++) {
             const src = `src/images/${difficulty}/0${randomSrcCopy.pop()}.png`;
-            const position = randomPosNumbers.pop();
+            const position = 0;
             const card = new SingleCard(Math.random().toString(), src, position, 0);
-            this.cardsStorage.push(card);
+            cards.push(card);
         }
 
-        this.cardsStorage.forEach((_) => {
+        cards.forEach((_) => {
             const src = `src/images/${difficulty}/0${randomSrcCopyClone.pop()}.png`;
-            const clonePosition = randomSecondPosNumbers.pop();
+            const clonePosition = 0;
             const cardClone = new SingleCard(Math.random().toString(), src, clonePosition, 0);
-            this.cardsStorage.push(cardClone);
+            clonedCards.push(cardClone);
         });
-    }
 
-    private matchCards() {
-        )
+        randomPosNumbers = randomPosNumbers.reverse();
+        randomSecondPosNumbers = randomSecondPosNumbers.reverse();
+
+        cards.forEach((card) => {
+            card.position = randomPosNumbers.pop() as number;
+        });
+
+        clonedCards.forEach((cardClone) => {
+            cardClone.position = randomSecondPosNumbers.pop() as number;
+        });
+
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].setPairPosition(clonedCards[i].position);
+            clonedCards[i].setPairPosition(cards[i].position);
+        }
+
+        this.cardsStorage.push(...cards, ...clonedCards);
     }
 
     private arrayValidation(a1: number[], a2: number[]): boolean {
@@ -93,8 +119,6 @@ export class Renderer {
         return true;
     }
 
-    // private renderCards(quantity: number) {}
-
     private cloneArray(array: any[]) {
         let clonedArray = [];
 
@@ -103,6 +127,16 @@ export class Renderer {
         }
 
         return clonedArray;
+    }
+
+    private getArrayOfNumbers(start: number, end: number) {
+        const numbers = [];
+
+        for (let x = start; x < end; x++) {
+            numbers.push(x);
+        }
+
+        return numbers;
     }
 
     private getRandomNumbers(count: number) {
@@ -120,6 +154,12 @@ export class Renderer {
         }
 
         return numbers;
+    }
+
+    getRandomIntInclusive(min: number, max: number) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 }
 
