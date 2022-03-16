@@ -17,7 +17,7 @@
         <script src="dist/app.js" defer></script>
     </head>
     <body>
-        <div class="container container--login hidden">
+        <div class="container container--login">
             <h2 class="login__heading">Witamy w <span class="login__heading__pink">Memorio</span>!</h2>
             <label for="name" class="login__name__label"></label>
             <input type="text" class="login__name__input" id="name" placeholder=". . ." />
@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <div class="container container--game">
+        <div class="container container--game hidden">
             <div class="game__nav">
                 <p class="game__nav__difficulty">
                     <i class="fas fa-skull game__nav__icon"></i>
@@ -95,6 +95,25 @@
                     </div>
                 </template>
             </div>
+        </div>
+
+        <div class="container container--end hidden">
+            <h2 class="end__heading">Gratulacje <span class="end__heading__name">Aleksandra</span>!</h2>
+            <p class="end__description">Udało Ci się wygrać!</p>
+
+            <h3 class="end__score__heading">Twój wynik:</h3>
+            <ul class="end__score__list">
+                <li class="end__score__list__item">Czas : <span class="end__score__time"></span></li>
+                <li class="end__score__list__item">
+                    Poziom trudności : <span class="end__score__difficulty"></span>
+                </li>
+                <li class="end__score__list__item">
+                    Liczba błędów : <span class="end__score__mistakes"></span>
+                </li>
+                <li class="end__score__list__item">Liczba par : <span class="end__score__matches"></span></li>
+            </ul>
+
+            <button class="btn end__restart">Zacznij od nowa!</button>
         </div>
     </body>
 </html>

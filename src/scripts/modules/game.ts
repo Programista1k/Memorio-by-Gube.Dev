@@ -1,6 +1,7 @@
 import { Autobind } from "../decorators/autobind";
 import { Renderer } from "./renderer";
 import { Difficulty } from "./init";
+import { Hider } from "./helpers/hider";
 
 export class Game {
     private renderer: Renderer;
@@ -16,7 +17,7 @@ export class Game {
     private hours = 0;
 
     //Game related
-    private gameContainer = document.querySelector(".container--game")!;
+    private gameContainer = document.querySelector(".container--game")! as HTMLElement;
 
     private matchedElement = document.querySelector(".game__nav__matched") as HTMLSpanElement;
     private missMatchedElement = document.querySelector(".game__nav__missMatched") as HTMLSpanElement;
@@ -32,6 +33,20 @@ export class Game {
     private missMatched: number = 0;
 
     private flipped: number = 0;
+
+    // Ending container
+
+    private endContainer = document.querySelector(".container--end")! as HTMLElement;
+    private endHeadingName = document.querySelector(".end__heading__name")! as HTMLElement;
+
+    private score = {
+        time: document.querySelector(".end__score__time")! as HTMLSpanElement,
+        difficulty: document.querySelector(".end__score__difficulty")! as HTMLSpanElement,
+        mistakes: document.querySelector(".end__score__mistakes")! as HTMLSpanElement,
+        matches: document.querySelector(".end__score__matches")! as HTMLSpanElement,
+    };
+
+    private resetButton = document.querySelector(".end__restart")!;
 
     constructor(private name: string, private difficulty: string) {
         this.setPairsCount();
@@ -64,6 +79,19 @@ export class Game {
 
     private endGame() {
         // Tutaj będzie zakańczanie gry, pokazywanie ekranu końcowego z wynikami, usuwanie wszystkich pól, etc.
+        this.timerEnabled = false;
+
+        Hider.hideElement(this.gameContainer);
+        this.gameContainer.classList.add("fadeOut");
+        Hider.showElement(this.endContainer);
+
+        this.resetButton.addEventListener("click", () => window.location.reload());
+
+        this.endHeadingName.innerText = this.name;
+        this.score.time.innerText = this.time;
+        this.score.difficulty.innerText = this.difficulty;
+        this.score.matches.innerText = this.matched.toString();
+        this.score.mistakes.innerText = this.missMatched.toString();
     }
 
     private setupListeners() {
@@ -98,6 +126,10 @@ export class Game {
             this.addToComparing(target);
             if (this.flipped === 2) {
                 this.compareCards();
+            }
+
+            if (this.matched == this.totalPairs) {
+                this.endGame();
             }
         }
     }
@@ -137,7 +169,6 @@ export class Game {
 
         this.matchedElement.innerText = this.matched.toString();
         this.missMatchedElement.innerText = this.missMatched.toString();
-        console.log(this.matched, this.missMatched);
     }
 
     @Autobind
